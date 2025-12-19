@@ -88,7 +88,7 @@
 
 {{-- Google Sign-up Button --}}
 <div class="d-grid gap-2">
-  <a href="{{ route('auth.google') }}" class="btn btn-outline-danger btn-lg">
+  {{-- <a href="{{ route('auth.google') }}" class="btn btn-outline-danger btn-lg"> --}}
     {{-- Google SVG Icon --}}
     <svg class="me-2" width="20" height="20" viewBox="0 0 24 24">
       {{-- ... SVG paths sama seperti di login ... --}}

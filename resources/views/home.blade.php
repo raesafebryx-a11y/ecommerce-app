@@ -20,7 +20,7 @@
                         Temukan berbagai produk berkualitas dengan harga terbaik.
                         Gratis ongkir untuk pembelian pertama!
                     </p>
-                    {{-- <a href="{{ route('catalog.index') }}" class="btn btn-light btn-lg"> --}}
+                    <a href="{{ route('catalog.index') }}" class="btn btn-light btn-lg">
                         <i class="bi bi-bag me-2"></i>Mulai Belanja
                     </a>
                 </div>
@@ -39,7 +39,7 @@
             <div class="row g-4">
                 @foreach($categories as $category)
                     <div class="col-6 col-md-4 col-lg-2">
-                        {{-- <a href="{{ route('catalog.index', ['category' => $category->slug]) }}" --}}
+                        <a href="{{ route('catalog.index', ['category' => $category->slug]) }}"
                            class="text-decoration-none">
                             <div class="card border-0 shadow-sm text-center h-100">
                                 <div class="card-body">
@@ -64,14 +64,14 @@
         <div class="container">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="mb-0">Produk Unggulan</h2>
-                {{-- <a href="{{ route('catalog.index') }}" class="btn btn-outline-primary"> --}}
+                <a href="{{ route('catalog.index') }}" class="btn btn-outline-primary">
                     Lihat Semua <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
             <div class="row g-4">
                 @foreach($featuredProducts as $product)
                     <div class="col-6 col-md-4 col-lg-3">
-                        {{-- @include('partials.product-card', ['product' => $product]) --}}
+                        @include('profile.partials.product-card', ['product' => $product])
                     </div>
                 @endforeach
             </div>
@@ -115,7 +115,7 @@
             <div class="row g-4">
                 @foreach($latestProducts as $product)
                     <div class="col-6 col-md-4 col-lg-3">
-                        {{-- @include('partials.product-card', ['product' => $product]) --}}
+                        @include('profile.partials.product-card', ['product' => $product])
                     </div>
                 @endforeach
             </div>
