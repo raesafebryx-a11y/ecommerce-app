@@ -8,7 +8,7 @@
 @section('title', 'Beranda')
 
 @section('content')
-    {{-- Hero Section --}}
+    Hero Section
     <section class="bg-primary text-white py-5">
         <div class="container">
             <div class="row align-items-center">
@@ -71,7 +71,7 @@
             <div class="row g-4">
                 @foreach($featuredProducts as $product)
                     <div class="col-6 col-md-4 col-lg-3">
-                        @include('profile.partials.product-card', ['product' => $product])
+                        @include('partials.product-card', ['product' => $product])
                     </div>
                 @endforeach
             </div>
@@ -115,7 +115,7 @@
             <div class="row g-4">
                 @foreach($latestProducts as $product)
                     <div class="col-6 col-md-4 col-lg-3">
-                        @include('profile.partials.product-card', ['product' => $product])
+                        @include('partials.product-card', ['product' => $product])
                     </div>
                 @endforeach
             </div>

@@ -65,7 +65,9 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // profile
+     Route::get('profile', [ProfileController::class, 'index'])->name('profile');
 
     // Produk CRUD
     Route::resource('products', AdminProductController::class);

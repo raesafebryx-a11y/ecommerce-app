@@ -57,9 +57,9 @@ class CatalogController extends Controller
         // 5. FILTER: DISKON
         // Hanya produk yang sedang diskon
         // ================================================
-        if ($request->boolean('on_sale')) {
-            $query->onSale();  // Scope: discount_price < price
-        }
+        // if ($request->boolean('on_sale')) {
+        //     $query->onSale();  // Scope: discount_price < price
+        // }
 
         // ================================================
         // 6. SORTING

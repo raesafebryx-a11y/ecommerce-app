@@ -25,7 +25,7 @@
         </div>
 
         @if($user->google_id)
-            {{-- <form action="{{ route('profile.google.unlink') }}" method="POST" class="d-inline"> --}}
+            <form action="{{ route('google.unlink') }}" method="POST" class="d-inline">
                 @csrf
                 @method('DELETE')
                 <button type="submit"
@@ -35,7 +35,7 @@
                 </button>
             </form>
         @else
-            {{-- <a href="{{ route('auth.google') }}" class="btn btn-outline-primary btn-sm"> --}}
+            {{-- <a href="{{ route('.auth.google') }}" class="btn btn-outline-primary btn-sm"> --}}
                 Hubungkan
             </a>
         @endif
