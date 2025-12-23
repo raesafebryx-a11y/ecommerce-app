@@ -23,7 +23,7 @@ class CategoryController extends Controller
             ->latest() // Urutkan dari yang terbaru (created_at desc)
             ->paginate(10); // Batasi 10 item per halaman
 
-        // return view('admin.categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**

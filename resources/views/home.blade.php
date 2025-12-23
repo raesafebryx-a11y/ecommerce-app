@@ -13,7 +13,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <h1 class="display-4 fw-bold mb-3">
-                        Belanja Online Mudah & Terpercaya Di Toko Online
+                        Balanja di online murah meriah pisan
                     </h1>
                     <p class="lead mb-4">
                         Temukan berbagai produk berkualitas dengan harga terbaik.
@@ -24,8 +24,9 @@
                     </a>
                 </div>
                 <div class="col-lg-6 d-none d-lg-block text-center">
-                    <img src="{{ asset('images/hero-shopping.svg') }}"
-                         alt="Shopping" class="img-fluid" style="max-height: 400px;">
+                   <video autoplay loop muted playsinline>
+                <source src="{{ asset('images/duar.mp4') }}" type="video/mp4">
+                 </video>
                 </div>
             </div>
         </div>
