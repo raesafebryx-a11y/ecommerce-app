@@ -109,7 +109,7 @@ class ProductController extends Controller
     public function show(Product $product): View
     {
         // Load semua relasi yang dibutuhkan untuk halaman detail.
-        $product->load(['category', 'images', 'orderItems']);
+        // $product->load(['category', 'images', 'orderItems']);
 
         return view('admin.products.show', compact('product'));
     }
