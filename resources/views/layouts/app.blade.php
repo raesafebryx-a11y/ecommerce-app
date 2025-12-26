@@ -125,5 +125,6 @@
     }
   }
 </script>
+    script tambahan dari child view --}} @stack('scripts')
 </body>
 </html>

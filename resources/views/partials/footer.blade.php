@@ -9,10 +9,10 @@
             {{-- Brand & Description --}}
             <div class="col-lg-4 col-md-6">
                 <h5 class="text-white mb-3">
-                    <i class="bi bi-bag-heart-fill me-2"></i>TokoOnline
+                    <i class="bi bi-bag-heart-fill me-2"></i>tokokamikami
                 </h5>
                 <p class="text-secondary">
-                    Toko online terpercaya dengan berbagai produk berkualitas.
+                    tokokamikami terpercaya dengan berbagai produk berkualitas.
                     Belanja mudah, aman, dan nyaman.
                 </p>
                 <div class="d-flex gap-3 mt-3">
@@ -63,15 +63,15 @@
                 <ul class="list-unstyled text-secondary">
                     <li class="mb-2">
                         <i class="bi bi-geo-alt me-2"></i>
-                        Jl. Contoh No. 123, Bandung
+                        Jl. tarate No. 123, Bandung
                     </li>
                     <li class="mb-2">
                         <i class="bi bi-telephone me-2"></i>
-                        (022) 123-4567
+                        (022) 123-4567-8910
                     </li>
                     <li class="mb-2">
                         <i class="bi bi-envelope me-2"></i>
-                        info@tokoonline.com
+                        info@tokokamikami
                     </li>
                 </ul>
             </div>
@@ -82,7 +82,7 @@
         <div class="row align-items-center">
             <div class="col-md-6 text-center text-md-start">
                 <p class="text-secondary mb-0 small">
-                    &copy; {{ date('Y') }} TokoOnline. All rights reserved.
+                    &copy; {{ date('Y') }} tokokamikami. All rights reserved.
                 </p>
             </div>
             <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
