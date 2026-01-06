@@ -10,14 +10,17 @@
 /* Import Bootstrap Icons */
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
+
 /* ================================================
    CUSTOM STYLES - Variabel dan Override
    ================================================ */
 
+
+
 :root {
   /* Warna Brand Toko */
   --primary-color: #4f46e5; /* Indigo */
-  --secondary-color: #328368; /* Emerald */
+  --secondary-color: #10b981; /* Emerald */
   --accent-color: #f59e0b; /* Amber */
 
   /* Warna Text */
@@ -33,10 +36,17 @@
 }
 
 .btn-primary:hover {
-  background-color: #238265;
-  border-color: #1b1838;
+  background-color: #4338ca;
+  border-color: #4338ca;
 }
 
+.hero-gradient {
+   background: linear-gradient(to bottom,
+       #13547a 0%,    /* Biru gelap atas */
+       #80d0c7 40%,   /* Turquoise lembut */
+       #2d6a7f 70%,   /* Biru langit cerah */
+       #ffffff 100%);
+}
 /* ================================================
    LAYOUT STYLES
    ================================================ */
@@ -79,4 +89,103 @@ footer {
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 600;
+}
+
+/* HERO */
+.hero-gradient {
+    background: linear-gradient(270deg, #0d6efd, #6610f2, #20c997);
+    background-size: 600% 600%;
+    animation: heroGradient 10s ease infinite;
+    position: relative;
+}
+
+@keyframes heroGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    z-index: 1;
+}
+
+.hero-title {
+    text-shadow: 0 6px 20px rgba(0,0,0,.4);
+}
+
+.hero-video {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0,0,0,.5);
+}
+
+/* KATEGORI */
+.category-card {
+    transition: all .3s ease;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+.category-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0,0,0,.2);
+}
+
+/* PROMO */
+.promo-section {
+    background: #111;
+}
+
+.promo-card {
+    padding: 3rem;
+    border-radius: 24px;
+    height: 100%;
+}
+
+.promo-yellow {
+    background: linear-gradient(135deg, #ffc107, #ff9800);
+    color: #000;
+}
+
+.promo-blue {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+}
+
+.navbar .nav-link {
+    transition: all .2s ease;
+}
+
+.navbar .nav-link:hover {
+    color: #0d6efd;
+    transform: translateY(-1px);
+}
+
+.navbar img.rounded-circle {
+    border: 2px solid #e9ecef;
+}
+
+.navbar {
+    backdrop-filter: blur(8px);
+    background-color: rgba(255,255,255,.85) !important;
+}
+
+.hero-gradient {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+}
+
+.category-card {
+    transition: all .3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 1rem 2rem rgba(0,0,0,.15);
+}
+
+.w-fit {
+    width: fit-content;
 }

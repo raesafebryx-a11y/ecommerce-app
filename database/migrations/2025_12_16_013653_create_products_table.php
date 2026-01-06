@@ -9,18 +9,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id(); // Big Integer Auto Increment Primary Key
-
+            $table->id();
 
             $table->foreignId('category_id')
                   ->constrained()
                   ->cascadeOnDelete();
 
-
             $table->string('name');
-            $table->string('slug')->unique(); // Slug wajib valid URL dan unik
+            $table->string('slug')->unique();
             $table->text('description')->nullable();
-
 
             $table->decimal('price', 12, 2);
 
@@ -29,14 +26,13 @@ return new class extends Migration
 
             $table->integer('stock')->default(0);
 
-
             $table->integer('weight')->default(0)->comment('dalam gram');
 
 
             $table->boolean('is_active')->default(true);
             $table->boolean('is_featured')->default(false);
 
-            $table->timestamps(); // created_at & updated_at
+            $table->timestamps();
 
 
             $table->index(['category_id', 'is_active']);

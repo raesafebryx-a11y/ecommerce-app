@@ -131,4 +131,3 @@ Route::controller(GoogleController::class)->group(function () {
 
 Route::post('midtrans/notification', [MidtransNotificationController::class, 'handle'])
     ->name('midtrans.notification');
-
