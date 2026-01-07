@@ -1,13 +1,10 @@
-
-{{-- resources/views/profile/partials/update-avatar-form.blade.php --}}
-
 <p class="text-muted small">
     Upload foto profil kamu. Format yang didukung: JPG, PNG, WebP. Maksimal 2MB.
 </p>
 
-<form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('profile.avatar.update') }}" enctype="multipart/form-data">
     @csrf
-    @method('patch')
+    @method('PATCH')
 
     <div class="d-flex align-items-center gap-4">
         {{-- Avatar Preview --}}

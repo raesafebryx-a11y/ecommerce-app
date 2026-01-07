@@ -171,6 +171,7 @@ class MidtransNotificationController extends Controller
             'status' => 'processing', // Siap diproses/dikirim
             'payment_status' => 'paid', // Tandai sudah dibayar
         ]);
+        event(new OrderPaidEvent($order));
 
         // Update Payment
         if ($payment) {
@@ -240,10 +241,10 @@ class MidtransNotificationController extends Controller
     }
     private function setSuccess(Order $order)
 {
-    $order->update([...]);
-        'status' => 'processing',
-        'payment_status' => 'paid',
-    ]);
+    // $order->update([]);
+    //     'status' => 'processing',
+    //     'payment_status' => 'paid',
+    // ]);
 
     // Fire & Forget
     event(new OrderPaidEvent($order));

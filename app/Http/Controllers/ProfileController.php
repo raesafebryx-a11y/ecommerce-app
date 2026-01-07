@@ -3,13 +3,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\ProfileUpdateRequest as RequestsProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+
 
 class ProfileController extends Controller
 {
@@ -27,38 +31,58 @@ class ProfileController extends Controller
     /**
      * Mengupdate informasi profil user.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(RequestsProfileUpdateRequest $request): RedirectResponse
     {
-        $user = $request->user();
+         $user = $request->user();
 
-        // 1. Handle Upload Avatar
-        // Cek apakah user mengupload file baru di input 'avatar'?
-        if ($request->hasFile('avatar')) {
-            // Upload file baru dan dapatkan path-nya (e.g., avatars/xxx.jpg)
-            $avatarPath = $this->uploadAvatar($request, $user);
+    // 1️⃣ Update data teks SAJA (tanpa avatar)
+    $user->fill(
+        $request->safe()->except('avatar')
+    );
 
-            // Simpan path ke properti model, tapi belum di-save ke DB (masih di memory)
-            $user->avatar = $avatarPath;
-        }
-
-        // 2. Update Data Text (Nama, Email, dll)
-        // fill() mengisi atribut model dengan data validasi, tapi belum disimpan ke DB.
-        // Ini lebih aman daripada $user->update() langsung karena kita mau cek 'isDirty' dulu.
-        $user->fill($request->validated());
-
-        // 3. Cek Perubahan Email
-        // Jika email berubah, kita harus membatalkan status verifikasi email (isDirty cek perubahan di memory).
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
-
-        // 4. Simpan ke Database
-        // Method save() baru benar-benar menjalankan query UPDATE ke database.
-        $user->save();
-
-        return Redirect::route('profile.edit')
-            ->with('success', 'Profil berhasil diperbarui!');
+    // 2️⃣ Handle avatar SETELAH fill()
+    if ($request->hasFile('avatar')) {
+        $user->avatar = $this->uploadAvatar($request, $user);
     }
+
+    // 3️⃣ Reset email verification jika email berubah
+    if ($user->isDirty('email')) {
+        $user->email_verified_at = null;
+    }
+
+    // 4️⃣ Simpan ke DB
+    $user->save();
+
+    return Redirect::route('profile.edit')
+        ->with('success', 'Profil berhasil diperbarui!');
+    }
+    /**
+ * Update avatar saja (tanpa nama & email)
+ */
+public function updateAvatar(Request $request): RedirectResponse
+{
+    $request->validate([
+        'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+    ]);
+
+    $user = $request->user();
+
+    // Hapus avatar lama
+    if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
+        Storage::disk('public')->delete($user->avatar);
+    }
+
+    // Simpan avatar baru
+    $filename = 'avatar-' . $user->id . '-' . time() . '.' . $request->file('avatar')->extension();
+    $path = $request->file('avatar')->storeAs('avatars', $filename, 'public');
+
+    // Update DB
+    $user->update([
+        'avatar' => $path,
+    ]);
+
+    return back()->with('success', 'Foto profil berhasil diperbarui.');
+}
 
     /**
      * Helper khusus untuk menangani logika upload avatar.
@@ -102,6 +126,7 @@ class ProfileController extends Controller
         return back()->with('success', 'Foto profil berhasil dihapus.');
     }
 
+
     /**
      * Update password user.
      */
@@ -109,7 +134,7 @@ class ProfileController extends Controller
     {
         $validated = $request->validateWithBag('updatePassword', [
             'current_password' => ['required', 'current_password'],
-            'password'         => ['required', 'confirmed', 'min:8'],
+            'password' => ['required', 'confirmed', 'min:8'],
         ]);
 
         $request->user()->update([
