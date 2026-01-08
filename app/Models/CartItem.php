@@ -68,9 +68,10 @@ class CartItem extends Model
     /**
      * Agar $item->subtotal di view tidak 0, fallback ke total_price
      */
-    public function getSubtotalAttribute()
-    {
-        return $this->total_price;
-    }
-
+   public function getSubtotalAttribute()
+{
+    // Mengambil harga produk (atau harga diskon jika ada) dikali jumlah
+    $harga = $this->product->discount_price > 0 ? $this->product->discount_price : $this->product->price;
+    return $harga * $this->quantity;
+}
 }

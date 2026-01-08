@@ -40,7 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
     Route::patch('/cart/{item}', [CartController::class, 'update'])->name('cart.update');
-    Route::delete('/cart/{item}', [CartController::class, 'remove'])->name('cart.remove');
+    Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 
     // Wishlist
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');

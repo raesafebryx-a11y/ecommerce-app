@@ -24,3 +24,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 5000);
   });
 });
+
+let harga = "Rp 1.259.050";
+let jumlah = 1;
+let subtotal = harga * jumlah; // Hasilnya akan NaN atau 0
+
+function hitungSubtotal(row) {
+    // Ambil harga dan hilangkan titik serta tulisan "Rp"
+    let hargaTeks = row.querySelector('.harga').innerText;
+    let hargaAngka = parseInt(hargaTeks.replace(/[^0-9]/g, ''));
+
+    let jumlah = parseInt(row.querySelector('.jumlah-input').value);
+
+    let subtotal = hargaAngka * jumlah;
+
+    // Tampilkan kembali dengan format Rupiah
+    row.querySelector('.subtotal').innerText = "Rp " + subtotal.toLocaleString('id-ID');
+}
+
+function updateGrandTotal() {
+    let total = 0;
+    document.querySelectorAll('.subtotal-elemen').forEach(el => {
+        let nilai = parseInt(el.innerText.replace(/[^0-9]/g, ''));
+        total += nilai;
+    });
+    document.getElementById('grand-total').innerText = "Rp " + total.toLocaleString('id-ID');
+}
