@@ -65,22 +65,23 @@
         </div>
 
         {{-- Card Pending --}}
-        <div class="col-sm-6 col-xl-3">
-            <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
-                <div class="card-body p-4">
-                    <div class="d-flex align-items-center">
-                        <div class="bg-warning-subtle p-3 rounded-3 me-3">
-                            <i class="bi bi-clock-history text-warning fs-4"></i>
-                        </div>
-                        <div>
-                            <p class="text-muted mb-0 small fw-bold uppercase">PERLU DIPROSES</p>
-                            <h4 class="mb-0 fw-bold">{{ $stats['pending_orders'] }}</h4>
-                        </div>
-                    </div>
+<div class="col-sm-6 col-xl-3">
+    <div class="card border-0 shadow-sm h-100 rounded-3 overflow-hidden">
+        <div class="card-body p-4">
+            <div class="d-flex align-items-center">
+                <div class="bg-warning-subtle p-3 rounded-3 me-3">
+                    <i class="bi bi-clock-history text-warning fs-4"></i>
                 </div>
-                <div class="bg-warning py-1"></div>
+                <div>
+                    <p class="text-muted mb-0 small fw-bold uppercase">PERLU DIPROSES</p>
+                    {{-- Pastikan variabel ini sama dengan yang di Controller --}}
+                    <h4 class="mb-0 fw-bold">{{ $stats['pending_orders'] ?? 0 }}</h4>
+                </div>
             </div>
         </div>
+        <div class="bg-warning py-1"></div>
+    </div>
+</div>
 
         {{-- Card Stok --}}
         <div class="col-sm-6 col-xl-3">
@@ -207,12 +208,11 @@
             <a href="https://wa.me/6289619869600" target="_blank" class="btn btn-primary btn-sm rounded-pill py-2 shadow-sm">
                 <i class="bi bi-whatsapp me-2"></i>Hubungi WhatsApp
             </a>
-        </div>
-    </div>
-</div>
+                       </div>
+                     </div>
+                  </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-

@@ -13,19 +13,22 @@ class OrderController extends Controller
      * Menampilkan daftar semua pesanan untuk admin.
      * Dilengkapi filter by status.
      */
-    public function index(Request $request)
-    {
-        $orders = Order::query()
-            ->with('user') // N+1 prevention: Load data user pemilik order
-            // Fitur Filter Status (?status=pending)
-            ->when($request->status, function($q, $status) {
-                $q->where('status', $status);
-            })
-            ->latest() // Urutkan terbaru
-            ->paginate(20);
+    public function index()
+{
+    $stats = [
+        'perlu_diproses' => \App\Models\Order::whereIn('status', ['Pending', 'Processing', 'pending', 'processing'])->count(),
+        'sedang_dikirim' => \App\Models\Order::whereIn('status', ['Shipped', 'shipped', 'Dikirim'])->count(),
+        'selesai'        => \App\Models\Order::whereIn('status', ['Delivered', 'delivered', 'Selesai'])
+                            ->whereMonth('created_at', now()->month)
+                            ->count(),
+        'total_pendapatan' => \App\Models\Order::whereIn('status', ['Delivered', 'delivered', 'Selesai'])->sum('total_amount'),
+    ];
 
-        return view('admin.orders.index', compact('orders'));
-    }
+    // GANTI ->get() MENJADI ->paginate(10)
+    $orders = \App\Models\Order::with('user')->latest()->paginate(10);
+
+    return view('admin.orders.index', compact('stats', 'orders'));
+}
 
     /**
      * Detail order untuk admin.

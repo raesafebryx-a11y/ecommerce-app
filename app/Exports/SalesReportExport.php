@@ -3,75 +3,55 @@
 namespace App\Exports;
 
 use App\Models\Order;
+// Pastikan tidak ada spasi sebelum atau sesudah baris use di bawah ini
 use Maatwebsite\Excel\Concerns\FromQuery;
-use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\Exportable;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class SalesReportExport implements FromQuery, WithHeadings, WithMapping, WithStyles
+class SalesReportExport implements FromQuery, WithMapping, WithHeadings, ShouldAutoSize, WithStyles
 {
-    use Exportable;
+    use Exportable; // Pastikan tertulis persis seperti ini
 
-    public function __construct(
-        protected string $dateFrom,
-        protected string $dateTo
-    ) {}
+    protected $dateFrom;
+    protected $dateTo;
 
-    /**
-     * 1. Query Data
-     */
+    public function __construct($dateFrom, $dateTo)
+    {
+        $this->dateFrom = $dateFrom;
+        $this->dateTo = $dateTo;
+    }
+
     public function query()
     {
         return Order::query()
-            ->with(['user', 'items'])
-            ->whereDate('created_at', '>=', $this->dateFrom)
-            ->whereDate('created_at', '<=', $this->dateTo)
-            ->where('payment_status', 'paid')
-            ->orderBy('created_at', 'asc');
+            ->with('user')
+            ->whereBetween('created_at', [$this->dateFrom . ' 00:00:00', $this->dateTo . ' 23:59:59']);
     }
 
-    /**
-     * 2. Header Kolom Excel
-     */
     public function headings(): array
     {
-        return [
-            'No. Order',
-            'Tanggal Transaksi',
-            'Nama Customer',
-            'Email',
-            'Jumlah Item',
-            'Total Belanja (Rp)',
-            'Status'
-        ];
+        return ['ID Pesanan', 'Tanggal', 'Nama Customer', 'Email', 'Total', 'Status'];
     }
 
-    /**
-     * 3. Mapping Data per Baris
-     * Mengatur data apa yang masuk ke kolom mana.
-     */
     public function map($order): array
     {
         return [
-            $order->order_number,
-            $order->created_at->format('d/m/Y H:i'), // Format tanggal Excel friendly
-            $order->user->name,
-            $order->user->email,
-            $order->items->sum('quantity'),
-            $order->total_amount, // Biarkan angka murni agar bisa dijumlah di Excel
-            ucfirst($order->status),
+            $order->order_number ?? '-',
+            $order->created_at ? $order->created_at->format('d/m/Y H:i') : '-',
+            optional($order->user)->name ?? 'Customer Umum',
+            optional($order->user)->email ?? '-',
+            (float) $order->total_amount,
+            strtoupper($order->status),
         ];
     }
 
-    /**
-     * 4. Styling (Opsional: Bold Header)
-     */
     public function styles(Worksheet $sheet)
     {
         return [
-            // Style baris pertama (Header) jadi Bold
             1 => ['font' => ['bold' => true]],
         ];
     }

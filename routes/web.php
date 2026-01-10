@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\MidtransNotificationController;
 use App\Http\Controllers\PaymentController;
 // ================================================
@@ -128,6 +129,10 @@ Route::controller(GoogleController::class)->group(function () {
         ->name('auth.google.callback');
 });
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/reports/sales', [ReportController::class, 'sales'])->name('reports.sales');
+    Route::get('/reports/sales/export', [ReportController::class, 'exportExcel'])->name('reports.sales.export');
+});
 
 Route::post('midtrans/notification', [MidtransNotificationController::class, 'handle'])
     ->name('midtrans.notification');
@@ -141,3 +146,5 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+

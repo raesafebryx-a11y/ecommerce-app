@@ -8,6 +8,8 @@ class EventServiceProvider extends ServiceProvider
   protected $listen = [
     Login::class => [
         MergeCartListener::class,
+                \App\Listeners\SendOrderPaidEmail::class,
+
     ],
   ];
 }
